@@ -14,6 +14,8 @@ function prePage(){
 }
 
 export function toLogin(push, pathLogin) {
+	
+	return false;
 	store.commit("LOGOUT");
 	let path = prePage();
 	// #ifdef H5
@@ -28,9 +30,9 @@ export function toLogin(push, pathLogin) {
 	} else {
 		if (path !== pathLogin) {
 		 push ? uni.navigateTo({
-		 	url:'/pages/users/login/index'
+		 	url:'/pages/users/user_sgin/index'
 		 }) : uni.reLaunch({
-		 	url: '/pages/users/login/index'
+		 	url: '/pages/users/user_sgin/index'
 		 });
 		}
 	}

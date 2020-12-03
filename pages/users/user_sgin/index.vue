@@ -1,7 +1,7 @@
 <template>
 	<view class='sign'>
 		<!-- <view class='sign'> -->
-			<!-- <view class='header bg-color'>
+		<!-- <view class='header bg-color'>
 				<view class='headerCon acea-row row-between-wrapper'>
 					<view class='left acea-row row-between-wrapper'>
 						<view class='pictrue'>
@@ -20,8 +20,8 @@
 			</view> -->
 		<view class="jfzx">
 			<!-- <view class="imgbg background-image" style="background-image: url(../../../static/jifen/j2.png);" > -->
-			<view class="imgbg background-image" style="background-image: url(/static/jifen/j2.png);" >
-				<view class="laba" >
+			<view class="imgbg background-image" style="background-image: url(/static/jifen/j2.png);">
+				<view class="laba">
 					<view class="laba1">
 						<image src="/static/jifen/j1.gif" mode=""></image>
 						<span> 您的{{userInfo.integral || 6688}}积分即将过期 </span>
@@ -73,29 +73,29 @@
 										</view>
 									</view>
 								</view>
-								
+
 							</span>
 						</p>
 					</span>
 				</view>
-				
+
 			</view>
 			<!-- <view class='wrapper'> -->
-				<!-- <view class='list acea-row row-between-wrapper'>
+			<!-- <view class='list acea-row row-between-wrapper'>
 					<view class='item' v-for="(item,index) in signSystemList" :key="index">
 						<view :class='(index+1) == signSystemList.length ? "rewardTxt" : ""'>{{item.title}}</view>
 						<view class='venus' :class="(index + 1 === signSystemList.length ? 'reward' : '') + ' ' +(sign_index >= index + 1 ? 'venusSelect' : '')"></view>
 						<view class='num' :class='item.is_sgin ? "on" : ""'>+{{item.integral}}</view>
 					</view>
 				</view> -->
-				<!-- <button class='but bg-color on' v-if="userInfo.isDaySign">已签到</button>
+			<!-- <button class='but bg-color on' v-if="userInfo.isDaySign">已签到</button>
 				<form @submit="goSign" report-submit='true' v-else>
 					<button class='but bg-color' formType="submit">立即签到</button>
 				</form> -->
 			<!-- 	<view class='lock'></view> -->
 			<!-- </view>
 			<view class='wrapper wrapper2'> -->
-				<!-- <view class='tip'>已累计签到</view>
+			<!-- <view class='tip'>已累计签到</view>
 				<view class='list2 acea-row row-center row-bottom'>
 					<view class='item'>{{signCount[0] || 0}}</view>
 					<view class='item'>{{signCount[1] || 0}}</view>
@@ -103,8 +103,8 @@
 					<view class='item'>{{signCount[3] || 0}}</view>
 					<view class='data'>天</view>
 				</view> -->
-				<!-- <view class='tip2'>据说连续签到第{{day}}天可获得超额积分，一定要坚持签到哦~~~</view> -->
-				<!-- <view class='list3'>
+			<!-- <view class='tip2'>据说连续签到第{{day}}天可获得超额积分，一定要坚持签到哦~~~</view> -->
+			<!-- <view class='list3'>
 					<view class='item acea-row' v-for="(item,index) in signList" :key="index">
 						<view>
 							<view class='name line1'>{{item.title}}</view>
@@ -128,7 +128,7 @@
 		<!-- #ifdef MP -->
 		<authorize @onLoadFun="onLoadFun" :isAuto="isAuto" :isShowAuth="isShowAuth" @authColse="authColse"></authorize>
 		<!-- #endif -->
-		
+
 		<!-- 首页推荐 -->
 		<view class="index-product-wrapper" :class="iSshowH?'on2':''">
 			<view class="nav-bd">
@@ -163,16 +163,20 @@
 			<view class="mores-txt flex" v-if="!goodScroll">
 				<text>我是有底线的</text>
 			</view>
-		</view> 
+		</view>
 		<!-- 引入弹窗组件 -->
-		<jfRules ref="jfRules" ></jfRules>
-		
+		<jfRules ref="jfRules"></jfRules>
+
 	</view>
 </template>
 
 <script>
-	import {toLogin} from '@/libs/login.js';
-	import {mapGetters} from "vuex";
+	import {
+		toLogin
+	} from '@/libs/login.js';
+	import {
+		mapGetters
+	} from "vuex";
 	import {
 		postSignUser,
 		getSignConfig,
@@ -181,9 +185,9 @@
 	} from '@/api/user.js';
 	import {
 		setFormId,
-		getIndexData//pst
+		getIndexData //pst
 	} from '@/api/api.js';
-	
+
 	//pst
 	import {
 		getCategoryList,
@@ -199,21 +203,21 @@
 		loginVisitorse
 	} from '@/api/user.js';
 	import recommend from '@/components/recommend';
-	
-	
+
+
 	// #ifdef MP
 	import authorize from '@/components/Authorize';
 	// #endif
-	
-	import jfRules from '@/components/jifenRules/jifenRules';//pst--积分规则弹窗
-	
+
+	import jfRules from '@/components/jifenRules/jifenRules'; //pst--积分规则弹窗
+
 	export default {
 		components: {
 			// #ifdef MP
 			authorize,
 			// #endif
-			
-			jfRules,//积分弹窗组件
+
+			jfRules, //积分弹窗组件
 		},
 		data() {
 			return {
@@ -227,7 +231,7 @@
 				isShowAuth: false, //是否隐藏授权
 				day: 0,
 				sign_index: 0,
-				
+
 				//pst
 				explosiveMoney: [],
 				iSshowH: false,
@@ -251,79 +255,96 @@
 				loadTitle: '加载更多',
 				sortProduct: [],
 				hotLimit: 10,
-				
+
 				// pst-弹窗部分
-				isshow:false,//默认不显示弹窗
+				isshow: false, //默认不显示弹窗
 				// isTop:false,
 			};
 		},
 		computed: mapGetters(['isLogin']),
-		onLoad() {
-			if (this.isLogin) {
-				this.getUserInfo();
-				this.getSignSysteam();
-				this.getSignList();
-			} else {
-				// #ifdef H5 || APP-PLUS
-				toLogin();
-				// #endif 
-				// #ifdef MP
-				this.isAuto = true;
-				this.$set(this, 'isShowAuth', true)
-				// #endif
-			};
-			
-			//pst
-			Promise.all([this.getAllCategory(), this.getIndexConfig()
-				, this.setVisit(),//收藏
-				this._loginVisitorse()
-			]);
-			
-			
-		},
+		
 		onShow() {
 			let self = this
 			uni.setNavigationBarTitle({
 				title: self.site_name
 			})
 		},
+		onLoad() {
+			
+			try{
+				let Visitorse = uni.getStorageSync('Visitorse');
+				if(Visitorse && Visitorse.token) {
+					this.onloadFn()
+				}else {
+					this._loginVisitorse()
+				}
+			}catch(e){
+				//TODO handle the exception
+			}
+		
+		},
 		methods: {
+			onloadFn() {
+				if (this.isLogin) {
+					console.log('if')
+					 this.getUserInfo();
+					 this.getSignSysteam();
+					 this.getSignList();
+				} else {
+					console.log('else')
+					// #ifdef H5 || APP-PLUS
+					 toLogin();
+					// #endif 
+					// #ifdef MP
+					this.isAuto = true;
+					this.$set(this, 'isShowAuth', true)
+					// #endif
+				};
+				
+				//pst
+				 Promise.all([ this.getAllCategory(), this.getIndexConfig(), this.setVisit() //收藏
+				
+				]);
+			},
 			// 游客模式
-			_loginVisitorse(){
+			_loginVisitorse() {
+				console.log('=======================')
 				loginVisitorse().then(res => {
-					if(res.code == 200) {
+					console.log('token----------', res)
+					if (res.code == 200) {
 						uni.setStorageSync('Visitorse', res.data);
-						try{
+						try {
 							this.$store.commit("LOGIN", {
 								'token': res.data.token
 							});
-						}catch(e){
+						} catch (e) {
 							throw new TypeError('游客模式添加全局token错误')
 						}
-						
-						
+						this.onloadFn()
+
+
 					}
-				})
+				}).catch(err => console.log('++++++++++++++++++', err))
 			},
 			// 弹窗部分开始-pst
-			showBase(){
+			showBase() {
 				// this.isshow = true;  
 				this.$refs.jfRules.showBase()
 			},
 			// 弹窗部分结束-pst 
-			goWddd(){
+			goWddd() {
 				uni.switchTab({
-				    url:"/pages/goods_search/index"
-							
+					url: "/pages/goods_search/index"
+
 				})
 			},
-			goWddd2(){
+			goWddd2() {
 				uni.navigateTo({
-				    url:"/pages/users/user_integral/index"
-							
+					url: "/pages/users/user_integral/index"
+
 				})
 			},
-			
+
 			/**
 			 * 授权回调
 			 */
@@ -342,6 +363,9 @@
 			getSignSysteam: function() {
 				let that = this;
 				getSignConfig().then(res => {
+					if(res.code == 401) {
+						that._loginVisitorse()
+					}
 					that.$set(that, 'signSystemList', res.data.list);
 					that.day = that.Rp(res.data.list.length);
 				})
@@ -364,8 +388,12 @@
 					integral: 6688,
 					sign: 1
 				}).then(res => {
+					console.log('==========', res)
+					if(res.code == 401) {
+						that._loginVisitorse()
+					}
 					res.data.integral = parseInt(res.data.integral);
-					uni.setStorageSync('myJifen', res.data.integral);//pst,和首页的getStorageSync呼应，将获取到的积分存入缓存
+					uni.setStorageSync('myJifen', res.data.integral); //pst,和首页的getStorageSync呼应，将获取到的积分存入缓存
 					let sum_sgin_day = res.data.sumSignDay;
 					that.$set(that, 'userInfo', res.data);
 					that.signCount = that.PrefixInteger(sum_sgin_day, 4);
@@ -383,6 +411,9 @@
 					page: 1,
 					limit: 3
 				}).then(res => {
+					if(res.code == 401) {
+						that._loginVisitorse()
+					}
 					that.$set(that, 'signList', res.data.list);
 				})
 			},
@@ -438,7 +469,7 @@
 			close: function() {
 				this.active = false;
 			},
-			
+
 			// 首页数据
 			getIndexConfig: function() {
 				let that = this;
@@ -448,10 +479,10 @@
 					})
 					that.$set(that, "site_name", '首页');
 					that.$set(that, "explosiveMoney", res.data.explosiveMoney);
-					console.log(res.data.explosiveMoney,'111111111111pst');
+					console.log(res.data.explosiveMoney, '111111111111pst');
 					// 设置选项卡默认显示数组的第一个
 					that.goodType = res.data.explosiveMoney[0].type;
-					
+
 					this.getGroomList();
 				})
 			},
@@ -507,7 +538,7 @@
 			// 	getLiveList(1, 20).then(res => {
 			// 		this.liveList = res.data
 			// 	}).catch(res => {
-			
+
 			// 	})
 			// },
 			// 精品推荐
@@ -624,7 +655,7 @@
 			get_host_product: function() {
 				let that = this;
 				that.loading = true;
-			
+
 				if (that.hotScroll) return
 				getProductHot(
 					that.hotPage,
@@ -636,23 +667,34 @@
 					// that.$set(that, 'hostProduct', res.data)
 				});
 			},
-			
-			
+
+
 		}
 	}
 </script>
 <style scoped>
-	.jfzx{position: relative;}
-	.imgbg{width: 100%;height: 260px;z-index: 4;position: relative;background-image: linear-gradient(140deg,#16a9ce,#1bdeba);}
-	.background-image {
-	    display: inline-block;
-	    background-position: 50%;
-	    background-size: cover;
-	    background-repeat: no-repeat;
+	.jfzx {
+		position: relative;
 	}
-	.laba{
+
+	.imgbg {
+		width: 100%;
+		height: 260px;
+		z-index: 4;
+		position: relative;
+		background-image: linear-gradient(140deg, #16a9ce, #1bdeba);
+	}
+
+	.background-image {
+		display: inline-block;
+		background-position: 50%;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+
+	.laba {
 		position: fixed;
-		background-color: rgba(0,0,0,.4);
+		background-color: rgba(0, 0, 0, .4);
 		width: 100%;
 		z-index: 999;
 		top: 0;
@@ -660,11 +702,27 @@
 		padding: 5px 0;
 		height: 2.5rem;
 	}
-	.laba1{margin: 0 auto;}
-	.laba1 image{float: left;width: 20px;height: 20px;margin-left: 0.5rem;margin-top: 5px;}
-	.laba1 span{float: left;line-height: 30px;color: #fff;font-size: 0.7rem;}
-	
-	.yuan{
+
+	.laba1 {
+		margin: 0 auto;
+	}
+
+	.laba1 image {
+		float: left;
+		width: 20px;
+		height: 20px;
+		margin-left: 0.5rem;
+		margin-top: 5px;
+	}
+
+	.laba1 span {
+		float: left;
+		line-height: 30px;
+		color: #fff;
+		font-size: 0.7rem;
+	}
+
+	.yuan {
 		width: 120px;
 		height: 120px;
 		position: relative;
@@ -674,10 +732,21 @@
 		border: 5px solid #1A8EE9;
 		border-radius: 50%;
 	}
-	.yuan p:first-child{text-align: center;margin-top: 30px;font-size: 14px;color: #383838;}
-	.yuan p:last-child{text-align: center;font-size: 28px;color: #383838;}
-	
-	.tuoyuan{
+
+	.yuan p:first-child {
+		text-align: center;
+		margin-top: 30px;
+		font-size: 14px;
+		color: #383838;
+	}
+
+	.yuan p:last-child {
+		text-align: center;
+		font-size: 28px;
+		color: #383838;
+	}
+
+	.tuoyuan {
 		background-color: #1A8EE9;
 		color: #fff;
 		width: 120px;
@@ -690,8 +759,17 @@
 		margin-top: 25px;
 		margin-left: -55px;
 	}
-	.clj{float: right;margin-top: -120px;color: #fff;font-size: 12px;text-align: center;line-height: 26px;}
-	.clj p{
+
+	.clj {
+		float: right;
+		margin-top: -120px;
+		color: #fff;
+		font-size: 12px;
+		text-align: center;
+		line-height: 26px;
+	}
+
+	.clj p {
 		margin-bottom: 10px;
 		background-color: #1A8EE9;
 		border-top-left-radius: 15px;
@@ -699,40 +777,51 @@
 		width: 60px;
 		height: 26px;
 	}
-	
-	.jfdh{position: relative;font-size: 12px;color: #333;width: 16rem;margin: 0 auto;margin-top: 70px;}
-	.jfdh p{
+
+	.jfdh {
+		position: relative;
+		font-size: 12px;
+		color: #333;
+		width: 16rem;
+		margin: 0 auto;
+		margin-top: 70px;
+	}
+
+	.jfdh p {
 		position: absolute;
-	}	
-	
-	.qiandao{
+	}
+
+	.qiandao {
 		position: relative;
 		width: 100%;
 	}
-	.qiandao2{
+
+	.qiandao2 {
 		position: absolute;
 		border-radius: 5%;
 		width: 96%;
 		border: 1px solid #D3D3D3;
 		border-radius: 5px;
-		transform: translate(1.8%,-45%);
+		transform: translate(1.8%, -45%);
 		z-index: 5;
 		height: 90px;
 	}
-	.qdleft{
+
+	.qdleft {
 		background-color: #1A8EE9;
 		float: left;
 		height: 100%;
 		border-top-left-radius: 5px;
 		border-bottom-left-radius: 5px;
 		width: 16%;
-		height:89px ;
+		height: 89px;
 		color: #fff;
 		text-align: center;
-		line-height: 43px ;
+		line-height: 43px;
 		font-size: 14px;
 	}
-	.qdright{
+
+	.qdright {
 		background-color: #fff;
 		float: right;
 		display: inline-block;
@@ -740,32 +829,37 @@
 		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
 		width: 84%;
-		height:89px ;
+		height: 89px;
 		color: #1A8EE9;
 		text-align: center;
 		line-height: 2rem;
 		font-size: 0.5rem;
 	}
-	.qdright p:first-child{
+
+	.qdright p:first-child {
 		display: inline-block;
 		height: 10px;
 	}
-	.qdright p:last-child{
+
+	.qdright p:last-child {
 		display: inline-block;
 		height: 10px;
 	}
-	
-	
-	.index-product-wrapper{
+
+
+	.index-product-wrapper {
 		margin-top: 140rpx;
 	}
+
 	.on2 {
 		min-height: 1500rpx;
 	}
+
 	.nav-bd {
 		display: flex;
 		align-items: center;
 	}
+
 	.nav-bd .item {
 		display: flex;
 		flex-direction: column;
@@ -773,11 +867,12 @@
 		justify-content: center;
 		width: 25%;
 	}
-	
+
 	.txt {
 		font-size: 32rpx;
 		color: #282828;
 	}
+
 	.label {
 		display: flex;
 		align-items: center;
@@ -788,10 +883,12 @@
 		font-size: 24rpx;
 		color: #999;
 	}
+
 	.active view:first-child {
-		color:  #C71715;
+		color: #C71715;
 		font-size: 0.9rem;
 	}
+
 	.active view:last-child {
 		background-color: #fc5554;
 		color: #fff;
@@ -803,36 +900,40 @@
 		margin-top: 0.2rem;
 		margin-bottom: 0.3rem;
 	}
-	
-	.list-box{
+
+	.list-box {
 		display: flex;
 		justify-content: space-around;
 		flex-wrap: wrap;
 		width: 100%;
-		height:100%;
+		height: 100%;
 		margin-top: 0.5rem;
 	}
-	.item2{
+
+	.item2 {
 		width: 47%;
 		/* border:1px solid #e4e4e4; */
 		margin-bottom: 0.5rem;
 		border-radius: 0.5rem;
 		box-shadow: 0 0 0.25rem 0.0625rem #e4e4e4;
 	}
-	.item2 image{
+
+	.item2 image {
 		width: 100%;
 		height: 10rem;
 		margin-bottom: 0.2rem;
 		border-top-left-radius: 0.5rem;
 		border-top-right-radius: 0.5rem;
 	}
-	.item2 image:nth-child(2){
+
+	.item2 image:nth-child(2) {
 		margin-right: 0.3rem;
 	}
-	.item2 image:nth-child(4){
+
+	.item2 image:nth-child(4) {
 		margin-right: 0.625rem;
 	}
-	
+
 	.mores-txt {
 		width: 100%;
 		align-items: center;
@@ -841,25 +942,27 @@
 		color: #999;
 		font-size: 24rpx;
 	}
+
 	.iconfont {
 		margin-top: 2rpx;
 		font-size: 20rpx;
 	}
-	
+
 	/* 弹窗部分开始 */
-	.tank{
+	.tank {
 		/* position: fixed; */
 		position: absolute;
-		background-color: rgba(0,0,0,.4);
-	/* 	width: 100%; */
+		background-color: rgba(0, 0, 0, .4);
+		/* 	width: 100%; */
 		height: 100%;
 		z-index: 9999;
 		text-align: left;
 		top: 0;
 		left: 0;
-	/* 	margin-top: -26rem; */
+		/* 	margin-top: -26rem; */
 	}
-	.tank2{
+
+	.tank2 {
 		background-color: #fff;
 		width: 80%;
 		display: block;
@@ -869,7 +972,8 @@
 		border-top-left-radius: 10px;
 		border-top-right-radius: 10px;
 	}
-	.queren{
+
+	.queren {
 		width: 80%;
 		height: 2.4rem;
 		background-color: #fff;
@@ -879,23 +983,25 @@
 		line-height: 2rem;
 		color: #ee0a24;
 		font-size: 1rem;
-		border-top:1px solid #CDCDCD;
+		border-top: 1px solid #CDCDCD;
 		border-bottom-left-radius: 10px;
 		border-bottom-right-radius: 10px;
 	}
-	.jfgztext{
+
+	.jfgztext {
 		position: fixed;
 		background-color: #fff;
-		width: 80%; 
-		display:block;
+		width: 80%;
+		display: block;
 		text-align: center;
 		font-size: 1rem;
 		color: #000;
-		padding: 10px 0; 
+		padding: 10px 0;
 		border-top-left-radius: 10px;
 		border-top-right-radius: 10px;
 	}
-	.jfgztext2{
+
+	.jfgztext2 {
 		font-size: 28rpx;
 		color: #646566;
 		width: 94%;
@@ -907,7 +1013,6 @@
 </style>
 
 <style scoped lang="scss">
-	
 	.sign .wrapper {
 		// background-color: #fff;
 		// margin: -80rpx 20rpx 0 20rpx;

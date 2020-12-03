@@ -34,6 +34,7 @@ export function loginMobile(data) {
 
 // pst新增接口请求
 export function loginVisitorse() {
+	console.log('====login/visitors====')
   return request.get("login/visitors", {}, { noAuth : false });
 }
 

@@ -82,7 +82,7 @@
 					_status: {}
 				},
 				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false ,//是否隐藏授权
+				isShowAuth: false ,//是否隐藏授权 
 				status:0,
 				msg:''
 			};
@@ -96,7 +96,7 @@
 				url: 1
 			});
 			this.orderId = options.order_id;
-			this.status = options.status || 0;
+			this.status = options.status || 1;
 			this.msg = options.msg || '';
 			if (this.isLogin) {
 				this.getOrderPayInfo();

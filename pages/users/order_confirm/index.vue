@@ -7,7 +7,7 @@
 				</span>
 				您正在安全购物环境中，请放心购买
 			</view>
-			
+
 			<view class="allAddress" :style="store_self_mention ? '':'padding-top:10rpx'">
 				<view class="nav acea-row">
 					<view class="item font-color" :class="shippingType == 0 ? 'on' : 'on2'" @tap="addressType(0)" v-if='store_self_mention'></view>
@@ -44,7 +44,7 @@
 				</view>
 			</view>
 			<orderGoods :cartInfo="cartInfo"></orderGoods>
-			
+
 			<view class='wrapper'>
 				<!-- <view class='item acea-row row-between-wrapper' @tap='couponTap' v-if="!pinkId && !BargainId && !combinationId && !seckillId">
 					<view>优惠券</view>
@@ -93,7 +93,7 @@
 				</view>
 				<view class='moneyList'>
 					<view class='item acea-row row-between-wrapper youhui'>
-						<view  class="youhui2">
+						<view class="youhui2">
 							<image class="youhui3" src="/static/order/yhq.png" mode=""></image>
 							<view class="youhui4">平台优惠</view>
 						</view>
@@ -121,8 +121,8 @@
 		    </view> -->
 				<view class='item' v-if="textareaStatus">
 					<view>备注信息</view>
-					<textarea class="beizhu" v-if="coupon.coupon===false" placeholder-class='placeholder' @input='bindHideKeyboard' value="" name="mark"
-					 placeholder='请添加备注（150字以内）'></textarea>
+					<textarea class="beizhu" v-if="coupon.coupon===false" placeholder-class='placeholder' @input='bindHideKeyboard'
+					 value="" name="mark" placeholder='请添加备注（150字以内）'></textarea>
 				</view>
 			</view>
 			<view class='wrapper zhifufs'>
@@ -139,8 +139,8 @@
 					</view>
 				</view>
 			</view>
-			
-			
+
+
 		</view>
 		<couponListWindow :coupon='coupon' @ChangCouponsClone="ChangCouponsClone" :openType='openType' :cartId='cartId'
 		 @ChangCoupons="ChangCoupons"></couponListWindow>
@@ -155,7 +155,7 @@
 				<view class="fkdjs1">
 					本品库存告急，请尽快支付
 				</view>
-				<countdown :startTime="startTime" :endTime="enTime"  class="fkdj2" />
+				<countdown :startTime="startTime" :endTime="enTime" class="fkdj2" />
 			</view>
 			<view class="tjdd">
 				<span class="tjdd1">
@@ -172,7 +172,7 @@
 						</view>
 					</view>
 				</span>
-				<span  class="tjdd2"  form-type="submit"  @tap="SubOrder">提交订单</span>
+				<span class="tjdd2" form-type="submit" @tap="SubOrder">提交订单</span>
 			</view>
 		</view>
 	</view>
@@ -212,13 +212,13 @@
 	// #ifdef MP
 	// import authorize from '@/components/Authorize';
 	// #endif
-	
-	import countdown from '@/components/cz-countdown/cz-countdown';
-	
-	import store from '@/store';
-	var jweixin = require('jweixin-module') 
 
-	
+	import countdown from '@/components/cz-countdown/cz-countdown';
+
+	import store from '@/store';
+	var jweixin = require('jweixin-module')
+
+
 	export default {
 		components: {
 			couponListWindow,
@@ -228,7 +228,7 @@
 			// #ifdef MP
 			//authorize,
 			// #endif
-			
+
 			countdown,
 		},
 		data() {
@@ -242,7 +242,7 @@
 						title: '微信快捷支付',
 						payStatus: 1,
 					},
-					
+
 					{
 						"name": "支付宝支付",
 						//"icon": require('../../../static/order/zfb.png'),
@@ -306,17 +306,17 @@
 				news: true,
 				again: false,
 				addAgain: false,
-				
-				startTime:'2020-10-22 12:00:00',
-				enTime:'2020-10-22 12:05:00',
+
+				startTime: '2020-10-22 12:00:00',
+				enTime: '2020-10-22 12:05:00',
 			};
 		},
 		computed: mapGetters(['isLogin']),
 		onLoad: function(options) {
-			console.log(options,2222222222);
-			
+			console.log(options, 2222222222);
+
 			// #ifdef H5
-			this.from='weixinh5'
+			this.from = 'weixinh5'
 			// this.from = this.$wechat.isWeixin() ? 'public' : 'weixinh5'
 			// this.from = this.$wechat.isWeixin() ? 'public' : 'weixinh5'
 			// #endif
@@ -456,7 +456,7 @@
 					return this.$util.Tips({
 						title: err
 					});
-					
+
 				});
 			},
 			addressType: function(e) {
@@ -543,21 +543,21 @@
 			 */
 			getConfirm: function() {
 				let that = this;
-				orderConfirm(that.cartId,that.news,this.addAgain).then(res => {
+				orderConfirm(that.cartId, that.news, this.addAgain).then(res => {
 					that.$set(that, 'userInfo', res.data.userInfo);
 					that.$set(that, 'integral', res.data.userInfo.integral);
 					that.$set(that, 'cartInfo', res.data.cartInfo);
 					that.$set(that, 'integralRatio', res.data.integralRatio);
 					that.$set(that, 'offlinePostage', res.data.offlinePostage);
 					that.$set(that, 'orderKey', res.data.orderKey);
-					console.log(77777,res.data.orderKey)
+					console.log(77777, res.data.orderKey)
 
 					that.$set(that, 'priceGroup', res.data.priceGroup);
 					that.$set(that, 'totalPrice', that.$util.$h.Add(parseFloat(res.data.priceGroup.totalPrice), parseFloat(res.data
 						.priceGroup.storePostage)));
 					// that.$set(that, 'seckillId', parseInt(res.data.seckill_id));
 					that.$set(that, 'seckillId', res.data.seckill_id);
-					that.$set(that, 'store_self_mention', res.data.storeSelfMention == 'true'?true:false);
+					that.$set(that, 'store_self_mention', res.data.storeSelfMention == 'true' ? true : false);
 					that.cartArr[1].title = '可用余额:' + res.data.userInfo.nowMoney;
 					that.cartArr[0].payStatus = res.data.payWeixinOpen || 0
 					// that.cartArr[1].payStatus = res.data.yuePayStatus || 0
@@ -589,16 +589,16 @@
 				let cartINfo = that.cartInfo;
 				let BargainId = 0;
 				let combinationId = 0;
-				
+
 				// cartINfo.forEach(function(value, index, cartINfo) {
 				// 	BargainId = cartINfo[index].bargain_id,
 				// 		combinationId = cartINfo[index].combination_id
 				// })
 				that.$set(that, 'BargainId', parseInt(BargainId));
 				that.$set(that, 'combinationId', parseInt(combinationId));
-				console.log(BargainId,333333333)
-				console.log(combinationId,444444)
-				console.log(that.seckillId,5555555)
+				console.log(BargainId, 333333333)
+				console.log(combinationId, 444444)
+				console.log(that.seckillId, 5555555)
 				// that.$set(that, 'BargainId', BargainId);
 				// that.$set(that, 'combinationId', combinationId);
 				if (that.cartArr.length == 3 && (BargainId || combinationId || that.seckillId)) {
@@ -627,7 +627,7 @@
 				let that = this;
 				if (that.addressId) {
 					getAddressDetail(that.addressId).then(res => {
-						if(res.data){
+						if (res.data) {
 							res.data.isDefault = parseInt(res.data.isDefault);
 							that.addressInfo = res.data || {};
 							that.addressId = res.data.id || 0;
@@ -636,7 +636,7 @@
 					})
 				} else {
 					getAddressDefault().then(res => {
-						if(res.data){
+						if (res.data) {
 							res.data.isDefault = parseInt(res.data.isDefault);
 							that.addressInfo = res.data || {};
 							that.addressId = res.data.id || 0;
@@ -648,13 +648,13 @@
 			payItem: function(e) {
 				let that = this;
 				let active = e;
-				console.log(e,999999999999)
-				that.active = active;//默认选中微信支付方式,0表示微信支付，1表示支付宝支付
+				console.log(e, 999999999999)
+				that.active = active; //默认选中微信支付方式,0表示微信支付，1表示支付宝支付
 				that.animated = true;
 				that.payType = that.cartArr[active].value;
-				console.log(that.payType,"查看支付方式")
+				console.log(that.payType, "查看支付方式")
 				that.computedPrice();
-				setTimeout(function() {
+				setTimeout(() => {
 					that.car();
 				}, 500);
 			},
@@ -681,18 +681,19 @@
 			},
 			payment: function(data) {
 				let that = this;
-				console.log('///////////////', that.orderKey);
-				
-				
+
+
 				orderCreate(that.orderKey, data).then(res => {
-					console.log(res,898989);
-					// uni.showModal({
-					// 	title:"预支付成功",
-					// })
-					
-					let {result, status, orderId, jsConfig, message} = res.data
-					
-					
+	
+					let {
+						result,
+						status,
+						orderId,
+						jsConfig,
+						message
+					} = res.data
+
+
 					// jweixin.ready((event) => {  
 					// 	console.log('event====',event);
 					// 	uni.showToast({
@@ -701,130 +702,127 @@
 					// 	})
 					//     // TODO  
 					// });
-					
-					
-					
+
+
+
 					window.location.href = jsConfig.h5PayUrl;
 					
+						
+
 					return false;
-					
-					// let result = res.data.result,
-					//     status = res.data.status,
-					// 	orderId = result.orderId,
-					// 	jsConfig = res.data.jsConfig,
-					// 	message = res.data.message;
-					
-					
-						// if(this.active==0){
-							// if(that.news == "false"){
-							// 	orderPay({
-							// 		'paytype': that.payType,
-							// 		'uni':res.data.result.key,
-							// 		'from': 'weixinh5'
-							// 	}).then(res=>{
-							// 		uni.showToast({
-							// 			title:"调用支付成功"
-							// 		})
-							// 		result = res.data.result;
-							// 		status = res.data.status;
-							// 		orderId = result.orderId;
-							// 		jsConfig = res.data.jsConfig;
-							// 		message = res.data.message;
-							// 		that.getPayType(status,orderId,message,jsConfig);
-							// 	}).catch((err)=>{
-							// 		uni.showToast({
-							// 			title:"调用支付失败",
-							// 			icon:"none"
-							// 		})
-							// 	})
-							// }else{
-							// 	that.getPayType(status,orderId,message,jsConfig);
-							// }
-						// }else{
-							// if(that.news == "false"){
-							// 	orderPay({
-							// 		'paytype': that.payType,
-							// 		'uni':res.data.result.key,
-							// 		'from': 'alipay '
-							// 	}).then(res=>{
-							// 		uni.showToast({
-							// 			title:"调用支付成功"
-							// 		})
-							// 		result = res.data.result;
-							// 		status = res.data.status;
-							// 		orderId = result.orderId;
-							// 		jsConfig = res.data.jsConfig;
-							// 		message = res.data.message;
-							// 		that.getPayType(status,orderId,message,jsConfig);
-							// 	}).catch((err)=>{
-							// 		uni.showToast({
-							// 			title:"调用支付失败",
-							// 			icon:"none"
-							// 		})
-							// 	})
-							// }else{
-							// 	that.getPayType(status,orderId,message,jsConfig);
-							// }
-						// }
-						console.log(45555,that.news)
-						if(that.news == "false"){
+
+
+
+					// if(this.active==0){
+					// if(that.news == "false"){
+					// 	orderPay({
+					// 		'paytype': that.payType,
+					// 		'uni':res.data.result.key,
+					// 		'from': 'weixinh5'
+					// 	}).then(res=>{
+					// 		uni.showToast({
+					// 			title:"调用支付成功"
+					// 		})
+					// 		result = res.data.result;
+					// 		status = res.data.status;
+					// 		orderId = result.orderId;
+					// 		jsConfig = res.data.jsConfig;
+					// 		message = res.data.message;
+					// 		that.getPayType(status,orderId,message,jsConfig);
+					// 	}).catch((err)=>{
+					// 		uni.showToast({
+					// 			title:"调用支付失败",
+					// 			icon:"none"
+					// 		})
+					// 	})
+					// }else{
+					// 	that.getPayType(status,orderId,message,jsConfig);
+					// }
+					// }else{
+					// if(that.news == "false"){
+					// 	orderPay({
+					// 		'paytype': that.payType,
+					// 		'uni':res.data.result.key,
+					// 		'from': 'alipay '
+					// 	}).then(res=>{
+					// 		uni.showToast({
+					// 			title:"调用支付成功"
+					// 		})
+					// 		result = res.data.result;
+					// 		status = res.data.status;
+					// 		orderId = result.orderId;
+					// 		jsConfig = res.data.jsConfig;
+					// 		message = res.data.message;
+					// 		that.getPayType(status,orderId,message,jsConfig);
+					// 	}).catch((err)=>{
+					// 		uni.showToast({
+					// 			title:"调用支付失败",
+					// 			icon:"none"
+					// 		})
+					// 	})
+					// }else{
+					// 	that.getPayType(status,orderId,message,jsConfig);
+					// }
+					// }
+					console.log(45555, that.news)
+					if (that.news == "false") {
 						// if(that.news == "true"){
-							orderPay({
-								'paytype': that.payType,
-								'uni':res.data.result.key,
-								'from': 'weixinh5',
-								// 'from': this.$wechat.isWeixin() ? 'weixinh5' : 'alipay',
-								// #ifdef MP 
-								// 'from': 'routine',
-								// #endif
-								// #ifdef H5 || APP-PLUS
-								// 'from': this.$wechat.isWeixin() ? 'weixin' : 'weixinh5',
-								// #endif
-							}).then(res=>{
-								uni.showToast({
-									title:"调用支付成功"
-								})
-								// wx.showModal({
-								// 	title:'hahahah',
-								// 	content:11111
-								// })
-								result = res.data.result;
-								status = res.data.status;
-								orderId = result.orderId;
-								jsConfig = res.data.jsConfig;
-								message = res.data.message;
-								that.getPayType(status,orderId,message,jsConfig);
-							}).catch((err)=>{
-								uni.showToast({
-									title:"调用支付失败",
-									icon:"none"
-									
-								})
+						orderPay({
+							'paytype': that.payType,
+							'uni': res.data.result.key,
+							'from': 'weixinh5',
+							// 'from': this.$wechat.isWeixin() ? 'weixinh5' : 'alipay',
+							// #ifdef MP 
+							// 'from': 'routine',
+							// #endif
+							// #ifdef H5 || APP-PLUS
+							// 'from': this.$wechat.isWeixin() ? 'weixin' : 'weixinh5',
+							// #endif
+						}).then(res => {
+							uni.showToast({
+								title: "调用支付成功"
 							})
-						}else{
-							that.getPayType(status,orderId,message,jsConfig);
-						}
+							// wx.showModal({
+							// 	title:'hahahah',
+							// 	content:11111
+							// })
+							result = res.data.result;
+							status = res.data.status;
+							orderId = result.orderId;
+							jsConfig = res.data.jsConfig;
+							message = res.data.message;
+							that.getPayType(status, orderId, message, jsConfig);
+						}).catch((err) => {
+							uni.showToast({
+								title: "调用支付失败",
+								icon: "none"
+
+							})
+						})
+					} else {
+						that.getPayType(status, orderId, message, jsConfig);
+					}
 				}).catch(err => {
-					console.log(err,1444433)
+					console.log(err, 1444433)
 					uni.showToast({
-						title:"预支付失败",
-						icon:"none",
+						title: "预支付失败",
+						icon: "none",
 						duration: 1000
 					})
-					let abc=setTimeout(function(){
+					let abc = setTimeout(function() {
 						uni.navigateTo({
-							url: '/pages/users/order_list/index'	
+							url: '/pages/users/order_list/index'
 						})
-					},1000)
+					}, 1000)
 					uni.hideLoading();
 					return that.$util.Tips({
-							title: err
-						});
-					
+						title: err
+					});
+
 				});
-			
+
 			},
-			getPayType: function(status,orderId,message,jsConfig){
+			getPayType: function(status, orderId, message, jsConfig) {
 				let that = this;
 				let goPages = '/pages/order_pay_status/index?order_id=' + orderId + '&msg=' + message;
 				switch (status) {
@@ -839,7 +837,7 @@
 							url: goPages
 						});
 						break;
-					case 'SUCCESS':	
+					case 'SUCCESS':
 						uni.hideLoading();
 						if (that.BargainId || that.combinationId || that.pinkId || that.seckillId)
 							return that.$util.Tips({
@@ -848,7 +846,7 @@
 							}, {
 								tab: 4,
 								url: goPages
-							});	
+							});
 						return that.$util.Tips({
 							title: message,
 							icon: 'success'
@@ -910,12 +908,12 @@
 						let jsConfigAgain = jsConfig;
 						let packages = 'prepay_id=' + jsConfigAgain.prepayId;
 						let data = {
-							timestamp:jsConfigAgain.timeStamp,
-							nonceStr:jsConfigAgain.nonceStr,
-							package:packages,
-							signType:jsConfigAgain.signType,
-							paySign:jsConfigAgain.paySign,
-							h5PayUrl:jsConfigAgain.h5PayUrl
+							timestamp: jsConfigAgain.timeStamp,
+							nonceStr: jsConfigAgain.nonceStr,
+							package: packages,
+							signType: jsConfigAgain.signType,
+							paySign: jsConfigAgain.paySign,
+							h5PayUrl: jsConfigAgain.h5PayUrl
 						};
 						this.$wechat.pay(data).then(res => {
 							return that.$util.Tips({
@@ -948,7 +946,7 @@
 					case "WECHAT_H5_PAY": //网页版公众号支付
 						setTimeout(() => {
 							let domain = encodeURIComponent(location.href);
-							let urls = jsConfigAgain.h5PayUrl + '&redirect_url='+ domain;
+							let urls = jsConfigAgain.h5PayUrl + '&redirect_url=' + domain;
 							location.href = urls;
 							return that.$util.Tips({
 								title: '支付成功',
@@ -961,7 +959,7 @@
 						break;
 				}
 			},
-			SubOrder: function(e) {	
+			SubOrder: function(e) {
 
 				let that = this,
 					data = {};
@@ -1000,10 +998,10 @@
 					couponId: that.couponId,
 					payType: that.payType,
 					useIntegral: that.useIntegral,
-					bargainId: that.BargainId?that.BargainId:0,
-					combinationId: that.combinationId?that.combinationId:0,
+					bargainId: that.BargainId ? that.BargainId : 0,
+					combinationId: that.combinationId ? that.combinationId : 0,
 					pinkId: that.pinkId,
-					seckillId: that.seckillId?that.seckillId:0,
+					seckillId: that.seckillId ? that.seckillId : 0,
 					mark: that.mark,
 					storeId: that.system_store.id || 0,
 					'from': that.from,
@@ -1035,14 +1033,15 @@
 	page {
 		background-color: #eee !important;
 	}
-	.my_order{
+
+	.my_order {
 		position: relative;
 		width: 100%; //pst
 		height: 240rpx;
 		margin: 0 auto;
 		padding: 60rpx 40rpx;
 		margin-bottom: 10rem;
-		
+
 		.bg {
 			position: absolute;
 			left: 0;
@@ -1052,15 +1051,19 @@
 			background-image: url('~@/static/order/order_bg.png');
 			background-size: 100% 100%;
 			z-index: 2; //pst
-			
+
 			color: #fff;
 			font-size: 0.8rem;
 			text-align: center;
 			line-height: 200rpx;
-			.anquan image{width: 1.2rem;height: 0.8rem;}
+
+			.anquan image {
+				width: 1.2rem;
+				height: 0.8rem;
+			}
 		}
 	}
-	
+
 	.order-submission .line {
 		width: 90%;
 		height: 3rpx;
@@ -1117,12 +1120,12 @@
 		// background-image: -webkit-linear-gradient(to bottom, #e93323 0%, #f5f5f5 100%);
 		// background-image: -moz-linear-gradient(to bottom, #e93323 0%, #f5f5f5 100%);
 		padding-top: 10rpx;
-		
+
 		position: relative;
-		background-color: #fff; 
+		background-color: #fff;
 		z-index: 3;
 		width: 100%;
-		transform: translate(0,55%);
+		transform: translate(0, 55%);
 		border-radius: 10px;
 		display: inline-block;
 		margin-bottom: 3rem;
@@ -1205,20 +1208,22 @@
 	.order-submission .wrapper .item .discount .placeholder {
 		color: #ccc;
 	}
-	
+
 	.order-submission .wrapper {
 		background-color: #fff;
 		margin-top: 13rpx;
 		border-radius: 10px;
 	}
-	.order-submission .wrapper .item .beizhu{
+
+	.order-submission .wrapper .item .beizhu {
 		width: 90%;
 	}
-	.order-submission .zhifufs{
+
+	.order-submission .zhifufs {
 		margin-bottom: 9rem;
 		display: inline-block;
 		width: 100%;
-		
+
 	}
 
 	.order-submission .wrapper .item {
@@ -1316,7 +1321,8 @@
 	.order-submission .wrapper .item .list .payItem .name .iconfont.icon-weixin2 {
 		background-color: #41b035;
 	}
-	.order-submission .wrapper .item .list .payItem .name .iconfont.icon-zhifubao{
+
+	.order-submission .wrapper .item .list .payItem .name .iconfont.icon-zhifubao {
 		background-color: #02a9f1;
 		margin-left: 15px;
 	}
@@ -1374,114 +1380,148 @@
 	.footer .transparent {
 		opacity: 0
 	}
-	
-	.peisong{
+
+	.peisong {
 		display: flex;
 		justify-content: space-between;
 		border-bottom: 1px dashed #D3D3D3;
 		width: 96%;
-		
+
 		.psfs2 {
 			width: 15%;
 			padding: 10px 0 5px 0px;
-			.psfs4{
-				width: 30px;height: 30px;
+
+			.psfs4 {
+				width: 30px;
+				height: 30px;
 			}
 		}
-		.psfs3{
+
+		.psfs3 {
 			display: flex;
 			justify-content: space-between;
 			width: 85%;
-			padding:10px 5px 5px 0;
+			padding: 10px 5px 5px 0;
 			line-height: 30px;
-			
-			.psfs5{font-size: 0.8rem;}
-			.psfs6{font-size: 0.9rem;font-weight: 600;}
+
+			.psfs5 {
+				font-size: 0.8rem;
+			}
+
+			.psfs6 {
+				font-size: 0.9rem;
+				font-weight: 600;
+			}
 		}
 	}
-	
-	.youhui{
+
+	.youhui {
 		width: 96%;
-		
+
 		.youhui2 {
 			width: 40%;
 			padding: 10px 0 0 0;
 			display: flex;
-			
-			.youhui3{
-				width: 30px;height: 30px;
+
+			.youhui3 {
+				width: 30px;
+				height: 30px;
 				margin-right: 10px;
 			}
-			.youhui4{
+
+			.youhui4 {
 				line-height: 2rem;
 			}
 		}
-		.youhui5{
+
+		.youhui5 {
 			display: flex;
 			justify-content: space-between;
 			width: 82%;
-			padding:-5px 10px 5px 0;
+			padding: -5px 10px 5px 0;
 			line-height: 30px;
 			margin-left: 15%;
-			.youhui51{font-size: 0.9rem;}
-			.youhui52{font-size: 0.9rem;color: #FF0000;}
+
+			.youhui51 {
+				font-size: 0.9rem;
+			}
+
+			.youhui52 {
+				font-size: 0.9rem;
+				color: #FF0000;
+			}
 		}
-		.youhui6{
+
+		.youhui6 {
 			display: flex;
 			justify-content: space-between;
 			width: 82%;
-			padding:-5px 10px 5px 0;
+			padding: -5px 10px 5px 0;
 			line-height: 30px;
 			margin-left: 15%;
-			.youhui61{font-size: 0.9rem;}
-			.youhui62{font-size: 0.9rem;color: #FF0000;}
+
+			.youhui61 {
+				font-size: 0.9rem;
+			}
+
+			.youhui62 {
+				font-size: 0.9rem;
+				color: #FF0000;
+			}
 		}
 	}
-	.dd_footer{
+
+	.dd_footer {
 		margin-top: 5rem;
 		position: fixed;
 		bottom: 0;
 		left: 0;
 		width: 100%;
-		
-		
-		.fkdjs{
+
+
+		.fkdjs {
 			background-color: #fff9e6;
 			width: 100%;
 			text-align: center;
 			color: #f00;
 			padding: 10px 0;
-			.fkdj2{
+
+			.fkdj2 {
 				width: 100%;
 				padding-left: 35%;
 			}
-			
+
 		}
-		.tjdd{
+
+		.tjdd {
 			display: flex;
 			justify-content: space-between;
 			background-color: #fff;
-			.tjdd1{
+
+			.tjdd1 {
 				width: 70%;
 				height: 3rem;
 				line-height: 1.5rem;
 				padding-right: 10px;
-				.tjdd11{
+
+				.tjdd11 {
 					display: flex;
 					justify-content: space-between;
-					
+
 				}
-				.tjdd12{
+
+				.tjdd12 {
 					color: #F00;
 					font-weight: 600;
 					display: flex;
 					justify-content: space-between;
 				}
 			}
-			.tjdd2{
+
+			.tjdd2 {
 				width: 30%;
 				text-align: center;
-				background-color: #FF0000; 
+				background-color: #FF0000;
 				color: #fff;
 				line-height: 3.5rem;
 				font-size: 0.8rem;
@@ -1491,8 +1531,23 @@
 </style>
 
 <style scoped>
-	/deep/ .countdown .time{margin-top: 0.3rem;background-color: transparent;color: #f00;}
-	/deep/ .countdown{margin-left: 0.3rem;background-color: transparent;color: #f00;}
-	/deep/ .image-container{margin: 0 auto;}
-	/deep/ .countdown .text{color: #f00;}
+	/deep/ .countdown .time {
+		margin-top: 0.3rem;
+		background-color: transparent;
+		color: #f00;
+	}
+
+	/deep/ .countdown {
+		margin-left: 0.3rem;
+		background-color: transparent;
+		color: #f00;
+	}
+
+	/deep/ .image-container {
+		margin: 0 auto;
+	}
+
+	/deep/ .countdown .text {
+		color: #f00;
+	}
 </style>

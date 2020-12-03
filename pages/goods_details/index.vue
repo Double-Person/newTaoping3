@@ -1155,6 +1155,7 @@
 			goBuy: function(e) {
 			
 				if (this.isLogin === false) {
+					console.log('if')
 					// #ifdef H5 || APP-PLUS
 					toLogin();
 					// #endif
@@ -1164,7 +1165,7 @@
 					// #endif
 				} else {
 					this.goCat(true);
-					
+					console.log('else')
 				}
 				console.log("点击立即兑换按钮")
 			},

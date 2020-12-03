@@ -107,7 +107,7 @@
             "mode" : "hash",
             "base" : "/h5"
         },
-        "domain" : "http://yflh.hkzhtech.com:8905",
+        "domain" : "https://yflh.hkzhtech.com",
         "sdkConfigs" : {
             "maps" : {
                 "qqmap" : {
