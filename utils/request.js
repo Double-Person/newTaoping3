@@ -6,6 +6,7 @@ import {
 } from '@/config/app';
 import {
 	toLogin,
+	checkTokenOverdue,
 	checkLogin
 } from '../libs/login';
 import store from '../store';
@@ -56,6 +57,10 @@ function baseRequest(url, method, data, {
 				else if (res.data.code == 200)
 					reslove(res.data, res);
 				else if ([410000, 410001, 410002, 401].indexOf(res.data.code) !== -1) {
+					if(res.data.code == 401) {
+						checkTokenOverdue();
+				
+					}
 					toLogin();
 					reject(res.data);
 				} else

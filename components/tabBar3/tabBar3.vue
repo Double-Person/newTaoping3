@@ -28,7 +28,7 @@
 					"iconPath": require("../../static/tabr/money.png"),
 					"text": "全额返"          
 				}, {
-					"pagePath": "/pages/jifen/jifen",
+					"pagePath": "/pages/users/user_integral/index",
 					"iconPath": require("../../static/tabr/h23.png"),
 					"text": "福利中心"
 				}],

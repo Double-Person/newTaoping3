@@ -4,7 +4,7 @@
 			<view class='search acea-row row-between-wrapper'>
 				<view class='input acea-row row-between-wrapper'>
 					<text class='iconfont icon-sousuo2'></text>
-					<input type='text' :value='searchValue' :focus="focus" placeholder='点击搜索商品' placeholder-class='placeholder' @input="setValue"></input>
+					<input type='text' :value='searchValue' :focus="focus" placeholder='点击查询订单' placeholder-class='placeholder' @input="setValue"></input>
 				</view>
 				<view class='bnt' @tap='searchBut'>搜索</view>
 			</view>
@@ -38,7 +38,7 @@
 			<view>
 				<view class="ddan3">
 					<span>联系客服</span>
-					<span>继续超值兑</span>
+					<span @click="goJxczd()">继续超值兑</span>
 				</view>
 				<recommend :hostProduct='hostProduct'></recommend>
 			</view>
@@ -90,6 +90,11 @@
 			
 		},
 		methods: {
+			goJxczd(){
+				uni.switchTab({
+					url:'/pages/users/user_sgin/index'
+				})
+			},
 			getRoutineHotSearch: function() {
 				let that = this;
 				// Promise，参考官网：https://uniapp.dcloud.io/api/README?id=promise-%e5%b0%81%e8%a3%85

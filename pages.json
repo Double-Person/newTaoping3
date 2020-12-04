@@ -12,6 +12,7 @@
 		},
 		{
 			"path": "pages/index/index",
+			"onReachBottomDistance":10,
 			"style": {
 				"navigationBarTitleText": "首页",
 				"navigationStyle": "custom",

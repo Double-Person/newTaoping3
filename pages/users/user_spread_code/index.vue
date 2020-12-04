@@ -83,6 +83,7 @@
 		},
 		computed: mapGetters(['isLogin']),
 		onLoad() {
+			this.userSpreadBannerList();
 			if (this.isLogin) {
 				// #ifdef H5
 				this.userSpreadBannerList();

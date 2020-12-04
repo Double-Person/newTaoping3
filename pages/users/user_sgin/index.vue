@@ -53,10 +53,10 @@
 						<p>已签到</p>
 						<p>
 							<view class='list2 acea-row row-center row-bottom'>
-								<view class='item'>{{signCount[0] || 0}}</view>
-								<view class='item'>{{signCount[1] || 0}}</view>
-								<view class='item'>{{signCount[2] || 0}}</view>
-								<view class='item'>{{signCount[3] || 0}}</view>
+								<view class='item'>{{signCount[0] || ''}}</view>
+								<view class='item'>{{signCount[1] || ''}}</view>
+								<view class='item'>{{signCount[2] || ''}}</view>
+								<view class='item'>{{signCount[3] || '0'}}</view>
 								<view class='data'>天</view>
 							</view>
 						</p>
@@ -139,7 +139,8 @@
 				</view>
 			</view>
 			<!-- 首发新品 -->
-			<view class="list-box animated" :class='tempArr.length > 0?"fadeIn on":""'>
+			<!-- :class='tempArr.length > 0?"fadeIn on":""' -->
+			<view class="list-box animated">
 				<view class="item2" v-for="(item,index) in tempArr" :key="index" @click="goDetail(item)">
 					<view class="pictrue2">
 						<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '1'">秒杀</span>
@@ -262,7 +263,7 @@
 			};
 		},
 		computed: mapGetters(['isLogin']),
-		
+
 		onShow() {
 			let self = this
 			uni.setNavigationBarTitle({
@@ -270,47 +271,68 @@
 			})
 		},
 		onLoad() {
-			
-			try{
+
+			try {
 				let Visitorse = uni.getStorageSync('Visitorse');
-				if(Visitorse && Visitorse.token) {
+				if (Visitorse && Visitorse.token) {
 					this.onloadFn()
-				}else {
+				} else {
 					this._loginVisitorse()
 				}
-			}catch(e){
+			} catch (e) {
 				//TODO handle the exception
 			}
-		
+
+		},
+		onReachBottom() {
+		console.log('====================')
+		console.log(this.params.page)
+			let item = {
+				type: -1
+			}
+
+			if (this.ProductNavindex == 0) { // 销售单品
+				item.type = 4
+
+			} else if (this.ProductNavindex == 1) { // 精品推荐
+				item.type = 1
+
+			} else if (this.ProductNavindex == 2) { // 热门榜单
+				item.type = 2
+
+			} else if (this.ProductNavindex == 3) { // 手法新品
+				item.type = 3
+			}
+			
+			this.getGroomList(item, this.ProductNavindex)
+
 		},
 		methods: {
 			onloadFn() {
 				if (this.isLogin) {
 					console.log('if')
-					 this.getUserInfo();
-					 this.getSignSysteam();
-					 this.getSignList();
+					this.getUserInfo();
+					this.getSignSysteam();
+					this.getSignList();
 				} else {
 					console.log('else')
 					// #ifdef H5 || APP-PLUS
-					 toLogin();
+					toLogin();
 					// #endif 
 					// #ifdef MP
 					this.isAuto = true;
 					this.$set(this, 'isShowAuth', true)
 					// #endif
 				};
-				
+
 				//pst
-				 Promise.all([ this.getAllCategory(), this.getIndexConfig(), this.setVisit() //收藏
-				
+				Promise.all([this.getAllCategory(), this.getIndexConfig(), this.setVisit() //收藏
+
 				]);
 			},
 			// 游客模式
 			_loginVisitorse() {
-				console.log('=======================')
 				loginVisitorse().then(res => {
-					console.log('token----------', res)
 					if (res.code == 200) {
 						uni.setStorageSync('Visitorse', res.data);
 						try {
@@ -345,6 +367,7 @@
 				})
 			},
 
+
 			/**
 			 * 授权回调
 			 */
@@ -363,7 +386,7 @@
 			getSignSysteam: function() {
 				let that = this;
 				getSignConfig().then(res => {
-					if(res.code == 401) {
+					if (res.code == 401) {
 						that._loginVisitorse()
 					}
 					that.$set(that, 'signSystemList', res.data.list);
@@ -388,8 +411,7 @@
 					integral: 6688,
 					sign: 1
 				}).then(res => {
-					console.log('==========', res)
-					if(res.code == 401) {
+					if (res.code == 401) {
 						that._loginVisitorse()
 					}
 					res.data.integral = parseInt(res.data.integral);
@@ -411,7 +433,7 @@
 					page: 1,
 					limit: 3
 				}).then(res => {
-					if(res.code == 401) {
+					if (res.code == 401) {
 						that._loginVisitorse()
 					}
 					that.$set(that, 'signList', res.data.list);
@@ -479,7 +501,6 @@
 					})
 					that.$set(that, "site_name", '首页');
 					that.$set(that, "explosiveMoney", res.data.explosiveMoney);
-					console.log(res.data.explosiveMoney, '111111111111pst');
 					// 设置选项卡默认显示数组的第一个
 					that.goodType = res.data.explosiveMoney[0].type;
 
@@ -549,6 +570,10 @@
 				if (onloadH) {
 					this.iSshowH = true
 				}
+				uni.showLoading({
+					title: '加载中',
+					mask: true
+				})
 				getGroomList(type, this.params).then(({
 					data
 				}) => {
@@ -557,7 +582,7 @@
 					this.goodScroll = data.list.length >= this.params.limit
 					this.params.page++
 					this.tempArr = this.tempArr.concat(data.list)
-				})
+				}).finally(() => uni.hideLoading())
 			},
 			// 记录会员访问-pst
 			setVisit() {

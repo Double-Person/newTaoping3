@@ -41,16 +41,16 @@
 			<!-- 限时秒杀部分 -->
 			<view class="xianshimiaosha">
 				<!-- <span class="miaosha1" @tap="goXsms"> -->
-					<span class="miaosha1">
+					<span class="miaosha1"  @click="goXsms()">
 					<image src="@/static/index/s1.png" mode=""></image>
 					<span class="mstext">限时秒杀</span>
 					<countdown :startTime="startTime" :endTime="enTime" />
 					<p class="tjms">9.9特价秒杀</p>
 				</span>
 				<!-- <span class="miaosha2" @tap="goDjqf"> -->
-						<span class="miaosha2">
+						<span class="miaosha2"  @click="goDjqf()">
 					<image src="@/static/index/s2.png" mode=""></image>
-					<span class="qftext">等价全返</span>
+					<span class="qftext" >等价全返</span>
 					<p class="xrxyh">新人享优惠</p>
 					<p class="tjms">免单全额返</p>
 				</span>
@@ -393,6 +393,18 @@
 			this.Jifen=uni.getStorageSync('myJifen');//将存入缓存中的额积分数据拿出来
 		},
 		methods: {
+			goXsms() {
+				uni.navigateTo({
+					url: "/pages/activity/goods_seckill/index"
+			
+				})
+			},
+			goDjqf(){
+				uni.navigateTo({
+					url: "/pages/users/user_goods_collection/index"
+			
+				})
+			},
 			loginVisitorse() {
 				let that = this;
 				loginVisitorse().then(res => {
